@@ -3,7 +3,7 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title BaseSwapDEX
@@ -78,7 +78,7 @@ contract BaseSwapDEX is Ownable, ReentrancyGuard {
     // Token addresses on Base mainnet
     address public constant USDC = 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913;
     address public constant USDT = 0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2;
-    address public constant TALENT = 0x9a33406165F562E16c3Abd82FD1185482e01B49a;
+    address public constant TALENT = 0x9a33406165f562E16C3abD82fd1185482E01b49a;
     address public constant WETH = 0x4200000000000000000000000000000000000006;
     
     // Protocol fee recipient
@@ -110,7 +110,7 @@ contract BaseSwapDEX is Ownable, ReentrancyGuard {
     event FeePercentUpdated(uint256 oldFee, uint256 newFee);
     event RouterUpdated(address indexed router, uint8 version);
     
-    constructor(address _feeRecipient) {
+    constructor(address _feeRecipient) Ownable(msg.sender) {
         require(_feeRecipient != address(0), "Invalid fee recipient");
         feeRecipient = _feeRecipient;
     }

@@ -10,9 +10,10 @@ async function main() {
   const BaseSwapDEX = await hre.ethers.getContractFactory("BaseSwapDEX");
   const dex = await BaseSwapDEX.deploy(FEE_RECIPIENT);
 
-  await dex.deployed();
+  await dex.waitForDeployment();
+  const dexAddress = await dex.getAddress();
 
-  console.log("BaseSwapDEX deployed to:", dex.address);
+  console.log("BaseSwapDEX deployed to:", dexAddress);
 
   // Base mainnet router addresses
   const UNISWAP_V2_ROUTER = "0x4752ba5dbc23f44d87826276bf6fd6b1c372ad24"; // BaseSwap
