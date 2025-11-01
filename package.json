@@ -10,11 +10,21 @@
     "verify": "hardhat verify"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
+    "@nomicfoundation/hardhat-ethers": "^3.1.2",
+    "@nomicfoundation/hardhat-ignition": "^0.15.15",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.16",
+    "@nomicfoundation/hardhat-network-helpers": "^1.1.2",
     "@nomicfoundation/hardhat-toolbox": "^3.0.0",
-    "hardhat": "^2.19.0",
-    "dotenv": "^16.3.1"
+    "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "@typechain/ethers-v6": "^0.4.3",
+    "@typechain/hardhat": "^8.0.3",
+    "dotenv": "^16.6.1",
+    "hardhat": "^2.26.5",
+    "hardhat-gas-reporter": "^1.0.10"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.0"
-  }
+    "@openzeppelin/contracts": "^5.4.0"
+  },
+  "type": "module"
 }

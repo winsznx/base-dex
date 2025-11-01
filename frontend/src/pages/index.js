@@ -19,11 +19,11 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-4 pt-12 pb-8 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
+      <div className="container mx-auto px-4 pt-8 sm:pt-12 pb-6 sm:pb-8 text-center">
+        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
           Swap Tokens on Base
         </h1>
-        <p className="text-xl text-muted-foreground mb-8">
+        <p className="text-base sm:text-xl text-muted-foreground mb-8">
           Fast, secure, and low-cost token swaps powered by Uniswap
         </p>
       </div>
@@ -34,8 +34,8 @@ export default function Home() {
       </div>
 
       {/* Features */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid md:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 py-8 sm:py-16">
+        <div className="grid md:grid-cols-3 gap-4 sm:gap-8">
           <FeatureCard
             icon={<Zap className="w-8 h-8" />}
             title="Lightning Fast"

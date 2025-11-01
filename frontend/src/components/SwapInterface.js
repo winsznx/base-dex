@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAccount, useBalance, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
 import { parseUnits, formatUnits } from 'viem';
-import { CONTRACT_ADDRESS, TOKENS, BASE_SWAP_ABI, ERC20_ABI } from '../config/contracts';
+import { CONTRACT_ADDRESS, TOKENS, BASE_SWAP_ABI, ERC20_ABI, WETH_ADDRESS } from '../config/contracts';
 import { ArrowDownUp, Settings, RefreshCw, AlertCircle, TrendingUp } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -43,38 +43,51 @@ export default function SwapInterface() {
     },
   });
 
-  // Get quote for swap
-  useEffect(() => {
-    if (amountIn && parseFloat(amountIn) > 0) {
-      fetchQuote();
-    } else {
-      setAmountOut('');
-    }
-  }, [amountIn, tokenIn, tokenOut]);
+  // Get real-time quote from contract
+  const { data: quoteData, isLoading: quoteLoading } = useReadContract({
+    address: CONTRACT_ADDRESS,
+    abi: BASE_SWAP_ABI,
+    functionName: 'getQuoteV2',
+    args: [
+      tokenIn.address === "0x0000000000000000000000000000000000000000" ? WETH_ADDRESS : tokenIn.address,
+      tokenOut.address === "0x0000000000000000000000000000000000000000" ? WETH_ADDRESS : tokenOut.address,
+      amountIn && parseFloat(amountIn) > 0 ? parseUnits(amountIn, tokenIn.decimals) : 0n
+    ],
+    query: {
+      enabled: !!amountIn && parseFloat(amountIn) > 0,
+      refetchInterval: 10000, // Refetch every 10 seconds
+    },
+  });
 
-  const fetchQuote = async () => {
-    try {
-      setIsLoading(true);
-      const amountInWei = parseUnits(amountIn, tokenIn.decimals);
-      
-      // Here you would call your quote function
-      // For now, using a placeholder calculation
-      const rate = 2000; // Placeholder exchange rate
-      const output = parseFloat(amountIn) * rate;
-      const fee = output * 0.03; // 3% fee
-      const finalOutput = output - fee;
-      
-      setAmountOut(finalOutput.toFixed(6));
-      
-      // Calculate price impact (placeholder)
-      setPriceImpact(0.5);
-    } catch (error) {
-      console.error('Error fetching quote:', error);
-      toast.error('Failed to fetch quote');
-    } finally {
-      setIsLoading(false);
+  // Update quote when data changes
+  useEffect(() => {
+    if (quoteData && amountIn && parseFloat(amountIn) > 0) {
+      try {
+        const outputAmount = formatUnits(quoteData, tokenOut.decimals);
+        setAmountOut(outputAmount);
+
+        // Calculate simple price impact
+        const inputValue = parseFloat(amountIn);
+        const outputValue = parseFloat(outputAmount);
+        if (inputValue > 0 && outputValue > 0) {
+          setPriceImpact(0.5); // Simplified for now
+        }
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Error parsing quote:', error);
+        setAmountOut('');
+        setIsLoading(false);
+      }
+    } else if (!amountIn || parseFloat(amountIn) <= 0) {
+      setAmountOut('');
+      setPriceImpact(0);
     }
-  };
+  }, [quoteData, amountIn, tokenOut.decimals]);
+
+  // Update loading state
+  useEffect(() => {
+    setIsLoading(quoteLoading);
+  }, [quoteLoading]);
 
   const handleApprove = async () => {
     try {
@@ -189,8 +202,8 @@ export default function SwapInterface() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4">
-      <div className="bg-card rounded-2xl shadow-xl border border-border p-6">
+    <div className="w-full max-w-md mx-auto p-2 sm:p-4">
+      <div className="bg-card rounded-2xl shadow-xl border border-border p-4 sm:p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-foreground">Swap</h2>
@@ -278,7 +291,7 @@ export default function SwapInterface() {
                 value={amountIn}
                 onChange={(e) => setAmountIn(e.target.value)}
                 placeholder="0.0"
-                className="flex-1 bg-transparent text-3xl font-semibold outline-none"
+                className="flex-1 min-w-0 bg-transparent text-2xl sm:text-3xl font-semibold outline-none"
               />
               <TokenSelector token={tokenIn} onSelect={setTokenIn} exclude={tokenOut} />
             </div>
@@ -312,7 +325,7 @@ export default function SwapInterface() {
                 value={amountOut}
                 readOnly
                 placeholder="0.0"
-                className="flex-1 bg-transparent text-3xl font-semibold outline-none"
+                className="flex-1 min-w-0 bg-transparent text-2xl sm:text-3xl font-semibold outline-none"
               />
               <TokenSelector token={tokenOut} onSelect={setTokenOut} exclude={tokenIn} />
             </div>
@@ -411,13 +424,13 @@ function TokenSelector({ token, onSelect, exclude }) {
     <>
       <button
         onClick={() => setShowModal(true)}
-        className="flex items-center gap-2 px-4 py-2 bg-background rounded-xl hover:bg-accent transition-colors"
+        className="flex-shrink-0 flex items-center gap-2 px-3 py-2 bg-background rounded-xl hover:bg-accent transition-colors"
       >
         <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
           <span className="text-xs font-bold">{token.symbol[0]}</span>
         </div>
         <span className="font-semibold">{token.symbol}</span>
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
