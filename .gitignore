@@ -1,5 +1,6 @@
 node_modules
 .env
+.env.local
 coverage
 coverage.json
 typechain
@@ -8,6 +9,9 @@ typechain-types
 # Hardhat files
 cache
 artifacts
+
+# Lock files (optional - keep if using pnpm)
+pnpm-lock.yaml
 
 # IDE
 .idea
@@ -19,3 +23,11 @@ artifacts
 # OS
 .DS_Store
 Thumbs.db
+
+# Next.js
+.next
+out
+
+# Build
+dist
+build
