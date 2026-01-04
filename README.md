@@ -130,17 +130,24 @@ Open http://localhost:3000 in your browser.
 
 ## Smart Contract Details
 
-**Contract Address:** [Will be updated after deployment]
+**Contract Address (Base Sepolia Testnet):** `0xfa67548E95E46D180D08768dc7972F043C617663`
+**Contract Address (Base Mainnet):** [Deploy using `npm run deploy:base`]
 
-**Supported Tokens on Base:**
+**Supported Tokens on Base (9 tokens):**
 - ETH (Native)
-- USDC: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
-- USDT: `0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2`
-- TALENT: `0x9a33406165F562E16c3Abd82FD1185482e01B49a`
+- USDC: `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913` (Circle native)
+- USDT: `0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2` (Bridged)
+- DAI: `0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb`
+- cbBTC: `0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf` (Coinbase Wrapped BTC)
+- AERO: `0x940181a94A35A4569E4529A3CDfB74e38FD98631` (Aerodrome)
+- DEGEN: `0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed`
+- BRETT: `0x532f27101965dd16442E59d40670FaF5eBB142E4`
+- TALENT: `0x9a33406165f562E16C3abD82fd1185482E01b49a` (Talent Protocol)
 
-**Router Integration:**
-- Uniswap V3: `0x2626664c2603336E57B271c5C0b26F421741e481`
-- BaseSwap V2: `0x4752ba5dbc23f44d87826276bf6fd6b1c372ad24`
+**Router Integration (verified from official Uniswap docs):**
+- Uniswap V3 SwapRouter02: `0x2626664c2603336E57B271c5C0b26F421741e481`
+- Uniswap V3 QuoterV2: `0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a`
+- Uniswap V2 Router: `0x4752ba5dbc23f44d87826276bf6fd6b1c372ad24`
 
 ## Usage
 
