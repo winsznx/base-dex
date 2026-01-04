@@ -23,7 +23,7 @@ export const TOKENS = {
     logo: "/tokens/usdt.svg"
   },
   TALENT: {
-    address: "0x9a33406165F562E16c3Abd82FD1185482e01B49a",
+    address: "0x9a33406165f562E16C3abD82fd1185482E01b49a",
     symbol: "TALENT",
     name: "Talent Protocol",
     decimals: 18,
