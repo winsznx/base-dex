@@ -1,4 +1,4 @@
-const hre = require("hardhat");
+import hre from "hardhat";
 
 async function main() {
   console.log("Deploying BaseSwapDEX to Base mainnet...");
@@ -38,29 +38,31 @@ async function main() {
   console.log("✓ Uniswap V3 Quoter set:", UNISWAP_V3_QUOTER);
 
   console.log("\n=== Deployment Summary ===");
-  console.log("Contract Address:", dex.address);
+  console.log("Contract Address:", dexAddress);
   console.log("Fee Recipient:", FEE_RECIPIENT);
   console.log("Fee Percent: 3%");
   console.log("\nSupported Tokens:");
   console.log("- USDC: 0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913");
-  console.log("- USDT: 0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2");
+  console.log("- USDT: 0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2 (Bridged)");
   console.log("- TALENT: 0x9a33406165F562E16c3Abd82FD1185482e01B49a");
   console.log("- WETH: 0x4200000000000000000000000000000000000006");
 
-  // Wait for block confirmations before verifying
-  console.log("\nWaiting for block confirmations...");
-  await dex.deployTransaction.wait(5);
+  console.log("\n⚠️  IMPORTANT: Update the following files with the new contract address:");
+  console.log("   - frontend/.env.local (NEXT_PUBLIC_CONTRACT_ADDRESS)");
+  console.log("   - frontend/src/config/contracts.js (CONTRACT_ADDRESS)");
 
   // Verify contract on BaseScan
   console.log("\nVerifying contract on BaseScan...");
   try {
     await hre.run("verify:verify", {
-      address: dex.address,
+      address: dexAddress,
       constructorArguments: [FEE_RECIPIENT],
     });
     console.log("✓ Contract verified successfully");
   } catch (error) {
     console.log("Verification error:", error.message);
+    console.log("You can verify manually with:");
+    console.log(`npx hardhat verify --network base ${dexAddress} ${FEE_RECIPIENT}`);
   }
 }
 
