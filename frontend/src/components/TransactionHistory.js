@@ -182,6 +182,8 @@ export default function TransactionHistory() {
                                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                                     <span>{formatDate(tx.timestamp)}</span>
                                     <span className="flex items-center gap-2">
+                                        <span className="text-green-500/80">Fee: {parseFloat(tx.fee).toFixed(5)} {tx.tokenOut.symbol}</span>
+                                        <span>•</span>
                                         <span>V{tx.routerVersion}</span>
                                         <span>•</span>
                                         <span>{shortenHash(tx.hash)}</span>
