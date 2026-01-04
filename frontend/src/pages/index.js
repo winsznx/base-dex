@@ -1,5 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import SwapInterface from '../components/SwapInterface';
+import TransactionHistory from '../components/TransactionHistory';
 import { TrendingUp, Shield, Zap } from 'lucide-react';
 
 export default function Home() {
@@ -8,11 +9,12 @@ export default function Home() {
       {/* Navigation */}
       <nav className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-40">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-              <TrendingUp className="w-6 h-6 text-primary-foreground" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center overflow-hidden">
+              <img src="/logo.png" alt="Base Swap" className="w-8 h-8 object-contain" />
             </div>
-            <span className="text-xl font-bold">Base Swap</span>
+            <span className="text-xl font-bold hidden sm:inline-block">Base Swap</span>
+            <span className="text-xl font-bold sm:hidden">Base Swap</span>
           </div>
           <ConnectButton />
         </div>
@@ -23,19 +25,31 @@ export default function Home() {
         <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
           Swap Tokens on Base
         </h1>
-        <p className="text-base sm:text-xl text-muted-foreground mb-8">
-          Fast, secure, and low-cost token swaps powered by Uniswap
+        <p className="text-base sm:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+          Fast, secure, and low-cost token swaps powered by Uniswap V2 & V3
         </p>
       </div>
 
-      {/* Main Swap Interface */}
+      {/* Main Content Grid */}
       <div className="container mx-auto px-4 pb-16">
-        <SwapInterface />
+        <div className="grid lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
+          {/* Swap Interface */}
+          <div className="w-full">
+            <SwapInterface />
+
+            {/* Mobile-only Transaction History Access could go here if needed, but side-by-side or stacked is fine */}
+          </div>
+
+          {/* Transaction History - Stacks on mobile, side-by-side on desktop */}
+          <div className="w-full">
+            <TransactionHistory />
+          </div>
+        </div>
       </div>
 
       {/* Features */}
-      <div className="container mx-auto px-4 py-8 sm:py-16">
-        <div className="grid md:grid-cols-3 gap-4 sm:gap-8">
+      <div className="container mx-auto px-4 py-8 sm:py-16 border-t border-border/50">
+        <div className="grid md:grid-cols-3 gap-4 sm:gap-8 max-w-6xl mx-auto">
           <FeatureCard
             icon={<Zap className="w-8 h-8" />}
             title="Lightning Fast"
@@ -55,9 +69,13 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-16">
+      <footer className="border-t border-border mt-auto">
         <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
-          <p>© 2024 Base Swap DEX. Built on Base.</p>
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <img src="/logo.png" alt="Logo" className="w-6 h-6 opacity-80" />
+            <span className="font-semibold">Base Swap DEX</span>
+          </div>
+          <p>© 2026 Base Swap DEX. Built on Base.</p>
         </div>
       </footer>
     </div>
