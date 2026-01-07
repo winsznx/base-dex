@@ -156,38 +156,42 @@ export default function TransactionHistory() {
                         No transactions yet
                     </div>
                 ) : (
-                    <div className="space-y-3 max-h-80 overflow-y-auto">
+                    <div className="space-y-3 max-h-80 overflow-y-auto scrollbar-hide">
                         {transactions.map((tx) => (
                             <div
                                 key={tx.hash}
-                                className="p-3 bg-muted rounded-xl hover:bg-muted/80 transition-colors"
+                                className="p-3 sm:p-4 bg-muted rounded-xl hover:bg-muted/80 transition-colors"
                             >
-                                <div className="flex items-center justify-between mb-2">
-                                    <div className="flex items-center gap-2 text-sm">
-                                        <span className="font-medium">{parseFloat(tx.amountIn).toFixed(6)}</span>
-                                        <span className="text-muted-foreground">{tx.tokenIn.symbol}</span>
-                                        <ArrowRight className="w-4 h-4 text-primary" />
-                                        <span className="font-medium">{parseFloat(tx.amountOut).toFixed(6)}</span>
-                                        <span className="text-muted-foreground">{tx.tokenOut.symbol}</span>
+                                {/* Swap amounts - responsive layout */}
+                                <div className="flex items-center justify-between gap-2 mb-2">
+                                    <div className="flex items-center gap-1.5 sm:gap-2 text-sm min-w-0 flex-1">
+                                        <span className="font-medium truncate">{parseFloat(tx.amountIn).toFixed(4)}</span>
+                                        <span className="text-muted-foreground flex-shrink-0">{tx.tokenIn.symbol}</span>
+                                        <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
+                                        <span className="font-medium truncate">{parseFloat(tx.amountOut).toFixed(4)}</span>
+                                        <span className="text-muted-foreground flex-shrink-0">{tx.tokenOut.symbol}</span>
                                     </div>
                                     <a
                                         href={`https://basescan.org/tx/${tx.hash}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-1 hover:bg-background rounded transition-colors"
+                                        className="p-2 -m-1 hover:bg-background rounded-lg transition-colors flex-shrink-0"
+                                        aria-label="View on Basescan"
                                     >
                                         <ExternalLink className="w-4 h-4 text-muted-foreground" />
                                     </a>
                                 </div>
-                                <div className="flex items-center justify-between text-xs text-muted-foreground">
-                                    <span>{formatDate(tx.timestamp)}</span>
-                                    <span className="flex items-center gap-2">
-                                        <span className="text-green-500/80">Fee: {parseFloat(tx.fee).toFixed(5)} {tx.tokenOut.symbol}</span>
-                                        <span>•</span>
+
+                                {/* Transaction details - stack on mobile */}
+                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-2 text-xs text-muted-foreground">
+                                    <span className="flex-shrink-0">{formatDate(tx.timestamp)}</span>
+                                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                                        <span className="text-green-500/80">Fee: {parseFloat(tx.fee).toFixed(4)}</span>
+                                        <span className="hidden sm:inline">•</span>
                                         <span>V{tx.routerVersion}</span>
                                         <span>•</span>
-                                        <span>{shortenHash(tx.hash)}</span>
-                                    </span>
+                                        <span className="font-mono">{shortenHash(tx.hash)}</span>
+                                    </div>
                                 </div>
                             </div>
                         ))}

@@ -395,16 +395,16 @@ export default function SwapInterface() {
 
         {/* Settings Panel */}
         {showSettings && (
-          <div className="mb-6 p-4 bg-muted rounded-lg animate-slideIn">
+          <div className="mb-6 p-3 sm:p-4 bg-muted rounded-lg animate-slideIn">
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium mb-2 block">Slippage Tolerance</label>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-1 scrollbar-hide">
                   {[0.5, 1.0, 2.0].map((val) => (
                     <button
                       key={val}
                       onClick={() => setSlippage(val)}
-                      className={`flex-1 py-2 rounded-lg transition-colors ${slippage === val
+                      className={`flex-shrink-0 px-4 sm:flex-1 py-2.5 rounded-lg transition-colors text-sm sm:text-base ${slippage === val
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-background hover:bg-accent'
                         }`}
@@ -416,7 +416,7 @@ export default function SwapInterface() {
                     type="number"
                     value={slippage}
                     onChange={(e) => setSlippage(parseFloat(e.target.value))}
-                    className="w-20 px-3 py-2 rounded-lg bg-background border border-border text-center"
+                    className="w-16 sm:w-20 px-2 sm:px-3 py-2.5 rounded-lg bg-background border border-border text-center text-sm sm:text-base flex-shrink-0"
                     step="0.1"
                   />
                 </div>
@@ -424,7 +424,7 @@ export default function SwapInterface() {
 
               <div>
                 <label className="text-sm font-medium mb-2 block">Router Version</label>
-                <div className="flex gap-2">
+                <div className="flex gap-1.5 sm:gap-2">
                   {[
                     { value: 0, label: 'Auto' },
                     { value: 2, label: 'V2' },
@@ -433,7 +433,7 @@ export default function SwapInterface() {
                     <button
                       key={option.value}
                       onClick={() => setPreferredVersion(option.value)}
-                      className={`flex-1 py-2 rounded-lg transition-colors ${preferredVersion === option.value
+                      className={`flex-1 py-2.5 rounded-lg transition-colors text-sm sm:text-base ${preferredVersion === option.value
                         ? 'bg-primary text-primary-foreground'
                         : 'bg-background hover:bg-accent'
                         }`}
@@ -526,27 +526,27 @@ export default function SwapInterface() {
 
         {/* Swap Details */}
         {amountOut && !quoteError && (
-          <div className="mb-4 p-4 bg-muted/50 rounded-lg space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Rate</span>
-              <span className="font-medium">
-                1 {tokenIn.symbol} = {(parseFloat(amountOut) / parseFloat(amountIn || 1)).toFixed(6)} {tokenOut.symbol}
+          <div className="mb-4 p-3 sm:p-4 bg-muted/50 rounded-lg space-y-2.5 text-xs sm:text-sm">
+            <div className="flex justify-between items-center gap-2">
+              <span className="text-muted-foreground flex-shrink-0">Rate</span>
+              <span className="font-medium text-right truncate">
+                1 {tokenIn.symbol} = {(parseFloat(amountOut) / parseFloat(amountIn || 1)).toFixed(4)} {tokenOut.symbol}
               </span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Protocol Fee (3%)</span>
-              <span className="font-medium">
-                {(parseFloat(amountOut) * 0.03).toFixed(6)} {tokenOut.symbol}
+            <div className="flex justify-between items-center gap-2">
+              <span className="text-muted-foreground flex-shrink-0">Protocol Fee (3%)</span>
+              <span className="font-medium text-right truncate">
+                {(parseFloat(amountOut) * 0.03).toFixed(4)} {tokenOut.symbol}
               </span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Min. Received (after fees)</span>
-              <span className="font-medium">
-                {(parseFloat(amountOut) * 0.97 * (1 - slippage / 100)).toFixed(6)} {tokenOut.symbol}
+            <div className="flex justify-between items-center gap-2">
+              <span className="text-muted-foreground flex-shrink-0">Min. Received</span>
+              <span className="font-medium text-right truncate">
+                {(parseFloat(amountOut) * 0.97 * (1 - slippage / 100)).toFixed(4)} {tokenOut.symbol}
               </span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-muted-foreground">Price Impact</span>
+            <div className="flex justify-between items-center gap-2">
+              <span className="text-muted-foreground flex-shrink-0">Price Impact</span>
               <span className={`font-medium ${priceImpact > 5 ? 'text-destructive' : 'text-green-500'}`}>
                 ~{priceImpact.toFixed(2)}%
               </span>

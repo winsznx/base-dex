@@ -69,13 +69,13 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-border mt-auto">
-        <div className="container mx-auto px-4 py-8 text-center text-muted-foreground">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <img src="/logo.png" alt="Logo" className="w-6 h-6 opacity-80" />
-            <span className="font-semibold">Base Swap DEX</span>
+      <footer className="border-t border-border mt-auto safe-area-inset">
+        <div className="container mx-auto px-4 py-6 sm:py-8 text-center text-muted-foreground">
+          <div className="flex items-center justify-center gap-2 mb-3 sm:mb-4">
+            <img src="/logo.png" alt="Logo" className="w-5 h-5 sm:w-6 sm:h-6 opacity-80" />
+            <span className="font-semibold text-sm sm:text-base">Base Swap DEX</span>
           </div>
-          <p>© 2026 Base Swap DEX. Built on Base.</p>
+          <p className="text-xs sm:text-sm">© 2026 Base Swap DEX. Built on Base.</p>
         </div>
       </footer>
     </div>
@@ -84,12 +84,12 @@ export default function Home() {
 
 function FeatureCard({ icon, title, description }) {
   return (
-    <div className="bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-shadow">
-      <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-4 text-primary">
+    <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 hover:shadow-lg transition-shadow active:scale-[0.98]">
+      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-primary/10 rounded-xl flex items-center justify-center mb-3 sm:mb-4 text-primary">
         {icon}
       </div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-muted-foreground">{description}</p>
+      <h3 className="text-lg sm:text-xl font-semibold mb-1.5 sm:mb-2">{title}</h3>
+      <p className="text-muted-foreground text-sm sm:text-base leading-relaxed">{description}</p>
     </div>
   );
 }
